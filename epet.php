@@ -7,6 +7,10 @@ $page = isset ($_GET['page']) ? $_GET['page'] : 0;
 $output = "";
 
 switch ($action) {
+  case "read":
+    // Wyświetl listę, 4 elementy, poczynając od $strona*4 elementu.
+    $output = render("epet-list", ["page" => $page, "epety" => EPet::all(4, $page*4), "count" => EPet::count()]);
+    break;
   // create i update są bardzo podobne, więc traktujemy je razem
   case "create-form":
   case "update-form":
@@ -15,10 +19,6 @@ switch ($action) {
                                    "model" => $epet->model, "opinia" => $epet->opinia,
                                    "cena" => $epet->cena]);
 
-    break;
-  case "read":
-    // Wyświetl listę, 4 elementy, poczynając od $strona*4 elementu.
-    $output = render("epet-list", ["page" => $page, "epety" => EPet::all(4, $page*4), "count" => EPet::count()]);
     break;
   // create i update są bardzo podobne, więc traktujemy je razem
   case "create":

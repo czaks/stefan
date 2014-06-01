@@ -25,6 +25,10 @@ switch ($action) {
       header("Location: .");
     }
     break;
+  case 'logout': // wylogowanie sie
+    unset($_SESSION['userid']);
+    header("Location: .");
+    break;
   case 'register-form': // formularz rejestracji
     $output = render("register", []);
     break;
@@ -75,6 +79,19 @@ switch ($action) {
 
       $output = render("register-activation", ["flash" => $flash]);
     }
+    break;
+  case 'activate': // aktywacja konta
+    $code = $_GET['code'];
+    $users = User::where("confirmed = 0 and confirm_hash = ?", [$code]);
+
+    if (!$users)
+      $output = render("register-activation", ["flash" => "Błędny kod potwierdzający, bądź konto już aktywne"]);
+    else {
+      $output = render("login", ["flash" => "Aktywacja przebiegła pomyślnie! Proszę się zalogować!", "noerror" => true]);
+      $users[0]->confirmed = 1;
+      $users[0]->save();
+    }
+
     break;
   case 'remind-form': // formularz przypomienia hasla
     $output = render("remind", []);
@@ -134,23 +151,6 @@ switch ($action) {
       $users[0]->save();
       $output = render("login", ["flash" => "Zmiana hasła przebiegła pomyślnie! Proszę się zalogować!", "noerror" => true]);
     }
-    break;
-  case 'activate': // aktywacja konta
-    $code = $_GET['code'];
-    $users = User::where("confirmed = 0 and confirm_hash = ?", [$code]);
-
-    if (!$users)
-      $output = render("register-activation", ["flash" => "Błędny kod potwierdzający, bądź konto już aktywne"]);
-    else {
-      $output = render("login", ["flash" => "Aktywacja przebiegła pomyślnie! Proszę się zalogować!", "noerror" => true]);
-      $users[0]->confirmed = 1;
-      $users[0]->save();
-    }
-
-    break;
-  case 'logout': // wylogowanie sie
-    unset($_SESSION['userid']);
-    header("Location: .");
     break;
   default:
     $output = "You have reached the end of the Internet, congratulations!";
