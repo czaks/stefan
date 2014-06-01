@@ -1,12 +1,12 @@
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-  id		int(11) primary key,
+  id		integer primary key not null,
   login		varchar(50)         not null,
   email		varchar(255)        not null,
   password	varchar(50)         not null,
-  admin		bool                not null,
-  confirmed	bool		    not null,
+  admin		bool                not null default 0,
+  confirmed	bool		    not null default 0,
   recovery      varchar(50)
 );
 

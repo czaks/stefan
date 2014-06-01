@@ -10,9 +10,9 @@ $s = explode(";", $initdb);			// Dzielimy po średniku, żeby wykonać kilka
 
 foreach ($s as $query) {			// Dla każdego zapytania...
   $pdo->query($query);           		// Załaduj je...
-  if ((int)$pdo->errorCode()) {
+  if ($pdo->errorCode() != '00000') {
     var_dump($pdo->errorInfo());		// Albo wyświetl błąd
-    die();
+    //die();
   }
 }
 
