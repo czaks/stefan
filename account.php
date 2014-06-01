@@ -62,11 +62,11 @@ switch ($action) {
       $flash = "";
 
       // Zakomentuj odtąd
-      /*
+
       @mail($email, "Rejestracja", "Kliknij w ten link aby kontynuować: http://{$_SERVER['HTTP_HOST']}".
                                     "/account.php?action=activate&code=".$user->confirm_hash)
 
-                                  or*/
+                                  or
       // Dotąd, jeżeli rejestracja wydaje się trwać w nieskończoność
 
               $flash = ("Niestety, konfiguracja serwera nie pozwoliła nam wysłać maila. Wejdź pod ten adres: ".
