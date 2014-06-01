@@ -7,6 +7,7 @@ CREATE TABLE users (
   password	varchar(50)         not null,
   admin		bool                not null default 0,
   confirmed	bool		    not null default 0,
+  confirm_hash   varchar(50),
   recovery      varchar(50)
 );
 

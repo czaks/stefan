@@ -58,7 +58,6 @@ class Model {
 
       $q .= "($q1) VALUES ($q2)";
     }
-    echo $q;
 
     $q = $pdo->prepare($q);
     $q->execute($fields);
