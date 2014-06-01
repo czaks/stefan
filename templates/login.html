@@ -1,7 +1,13 @@
-      <form class="form-login">
+      <?php if (isset ($flash)): ?>
+        <div class="alert alert-danger alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <strong>Błąd:</strong> <?=$flash?>
+        </div>
+      <?php endif ?>
+      <form class="form-login" method="post" action="?action=login">
         <h2 class="form-login-heading">Zaloguj się</h2>
-        <input type="text" class="form-control" placeholder="Login">
-        <input type="password" class="form-control" placeholder="Hasło">
+        <input type="text" class="form-control" placeholder="Login" name="login">
+        <input type="password" class="form-control" placeholder="Hasło" name="passwd">
         <a href="?action=remind-form">Przypomnij hasło</a>
         <button class="btn btn-large btn-primary btn-block" type="submit">Zaloguj się</button>
       </form>

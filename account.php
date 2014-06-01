@@ -10,7 +10,20 @@ switch ($action) {
     $output = render("login", []);
     break;
   case 'login':
+    $login = $_POST['login'];
+    $passwd = $_POST['passwd'];
+    $users = User::where("login = ?", [$login]);
 
+    if (!$users) {
+      $output = render("login", ["flash" => "Taki użytkownik nie istnieje!"]);
+      break;
+    }
+    if (!$users[0]->check_password($passwd)) {
+      $output = render("login", ["flash" => "Błędne hasło!"]);
+      break;
+    }
+    $_SESSION['userid'] = $users[0]->id;
+    header("Location: /");
     break;
   case 'register-form':
 
@@ -34,10 +47,9 @@ switch ($action) {
 
     break;
   case 'logout':
-    $_SESSION['userid'] = false;
+    unset($_SESSION['userid']);
     header("Location: /");
-    die();
     break;
 }
 
-layout($output);
+if ($output) layout($output);
