@@ -1,13 +1,13 @@
 <?php
 require_once "lib/core.php";
 
-$action = isset($_GET['action']) ? 'login-form' : $_GET['action'];
+$action = isset($_GET['action']) ? $_GET['action'] : 'login-form';
 
 $output = "";
 
 switch ($action) {
   case 'login-form':
-
+    $output = render("login", []);
     break;
   case 'login':
 

@@ -1,7 +1,38 @@
 body {
-  padding-top: 50px;
+  padding-top: 80px;
 }
 .my-title {
-  padding: 40px 15px;
+  padding: 20px 15px;
   text-align: center;
+}
+
+.form-login {
+  max-width: 300px;
+  padding: 19px 29px 29px;
+  margin: 0 auto 20px;
+  background-color: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+          box-shadow: 0 1px 2px rgba(0,0,0,.05);
+
+  text-align: center;
+}
+
+.form-login .form-login-heading {
+  margin-bottom: 10px;
+}
+
+.form-login input[type="text"],
+.form-login input[type="password"],
+.form-login a {
+  font-size: 16px;
+  height: auto;
+  margin-bottom: 15px;
+  padding: 7px 9px;
+}
+
+.form-login a {
+  display: block;
 }
