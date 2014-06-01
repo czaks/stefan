@@ -1,6 +1,6 @@
 <?php
 class EPet extends Model {
-  static $tablename = "epety";
+  static $tablename = "epety"; //nazwa tabeli w sql
   static $validators = [];
 }
 

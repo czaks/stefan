@@ -1,4 +1,6 @@
 <?php
+// Testy dla ORM-a (lib/minifw/model.php)
+
 require_once("lib/core.php");
 db_init();
 

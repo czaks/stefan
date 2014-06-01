@@ -1,6 +1,6 @@
 <?php
 class User extends Model {
-  static $tablename = "users";
+  static $tablename = "users"; //nazwa tabeli w sql
   static $validators = [];
 
   function set_password($password) {

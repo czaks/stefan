@@ -13,8 +13,8 @@ foreach ($s as $query) {			// Dla każdego zapytania...
   $pdo->query($query);           		// Załaduj je...
   if ($pdo->errorCode() != '00000') {
     var_dump($pdo->errorInfo());		// Albo wyświetl błąd
-    //die();
+    die();
   }
 }
 
-echo "Baza danych załadowana pomyślnie!";
+layout("Baza danych załadowana pomyślnie!");

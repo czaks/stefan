@@ -7,6 +7,7 @@ $page = isset ($_GET['page']) ? $_GET['page'] : 0;
 $output = "";
 
 switch ($action) {
+  // create i update są bardzo podobne, więc traktujemy je razem
   case "create-form":
   case "update-form":
     $epet = new EPet($id);
@@ -16,8 +17,10 @@ switch ($action) {
 
     break;
   case "read":
+    // Wyświetl listę, 4 elementy, poczynając od $strona*4 elementu.
     $output = render("epet-list", ["page" => $page, "epety" => EPet::all(4, $page*4), "count" => EPet::count()]);
     break;
+  // create i update są bardzo podobne, więc traktujemy je razem
   case "create":
   case "update":
     $epet = new EPet($id);
@@ -36,6 +39,7 @@ switch ($action) {
                                      "cena" => $epet->cena, "flash" => implode("<br>", $errors)]);
     }
     else {
+      // Wyświetl listę, 4 elementy, poczynając od $strona*4 elementu.
       $output = render("epet-list", ["page" => $page, "epety" => EPet::all(4, $page*4), "count" => EPet::count(),
                                      "flash" => "E-Papieros został pomyślnie ".($id?"zaktualizowany":"dodany"), "noerror" => true]);
     }
@@ -45,6 +49,7 @@ switch ($action) {
     $epet = new EPet($id);
     $epet->delete();
 
+    // Wyświetl listę, 4 elementy, poczynając od $strona*4 elementu.
     $output = render("epet-list", ["page" => $page, "epety" => EPet::all(4, $page*4), "count" => EPet::count(),
                                    "flash" => "E-Papieros został pomyślnie usunięty", "noerror" => true]);
     break;

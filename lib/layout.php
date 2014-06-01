@@ -1,5 +1,5 @@
 <?php
-function layout($content) {
+function layout($content) { // Skrótowiec, ma nam ułatwić pracę
   global $user, $logged_in;
 
   echo render("layout",

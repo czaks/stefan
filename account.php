@@ -6,10 +6,10 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'login-form';
 $output = "";
 
 switch ($action) {
-  case 'login-form':
+  case 'login-form': // formularz logowania
     $output = render("login", []);
     break;
-  case 'login':
+  case 'login': // logowanie wlasciwe
     $login = $_POST['login'];
     $passwd = $_POST['passwd'];
     $users = User::where("login = ?", [$login]);
@@ -25,10 +25,10 @@ switch ($action) {
       header("Location: .");
     }
     break;
-  case 'register-form':
+  case 'register-form': // formularz rejestracji
     $output = render("register", []);
     break;
-  case 'register':
+  case 'register': // rejestracja wlasciwa
     $login = $_POST['login'];
     $passwd = $_POST['password'];
     $passwd2 = $_POST['confirm'];
@@ -76,10 +76,10 @@ switch ($action) {
       $output = render("register-activation", ["flash" => $flash]);
     }
     break;
-  case 'remind-form':
+  case 'remind-form': // formularz przypomienia hasla
     $output = render("remind", []);
     break;
-  case 'remind':
+  case 'remind': // wyslanie maila
     $email = $_POST['email'];
     $users = User::where("email = ?", [$email]);
     if (!$users)
@@ -107,7 +107,7 @@ switch ($action) {
     $output = render("remind", ["flash" => $flash]);
 
     break;
-  case 'remind-restore-form':
+  case 'remind-restore-form': // przypomnienie hasla - formularz zmiany hasla (link otrzymany mailem)
     $code = $_GET['code'];
     $users = User::where("recovery = ?", [$code]);
     if ($users)
@@ -116,7 +116,7 @@ switch ($action) {
       $output = render("remind", ["flash" => "Błędny kod!"]);
 
     break;
-  case 'remind-restore':
+  case 'remind-restore': // przypomienie hasla - zmiana hasla
     $code = $_GET['code'];
     $users = User::where("recovery = ?", [$code]);
 
@@ -135,7 +135,7 @@ switch ($action) {
       $output = render("login", ["flash" => "Zmiana hasła przebiegła pomyślnie! Proszę się zalogować!", "noerror" => true]);
     }
     break;
-  case 'activate':
+  case 'activate': // aktywacja konta
     $code = $_GET['code'];
     $users = User::where("confirmed = 0 and confirm_hash = ?", [$code]);
 
@@ -148,7 +148,7 @@ switch ($action) {
     }
 
     break;
-  case 'logout':
+  case 'logout': // wylogowanie sie
     unset($_SESSION['userid']);
     header("Location: .");
     break;
