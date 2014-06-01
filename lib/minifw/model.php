@@ -5,6 +5,10 @@ class Model {
   var $values = [];
   var $index;
 
+  // Konstruktor:
+  // - jeżeli index nie został podany, albo jest podany jako 0, to
+  //   stwórz nowy rekord
+  // - jeżeli został jakiś indeks podany, to zaczytaj wartości
   function __construct($index = 0) {
     global $pdo;
 
@@ -16,10 +20,15 @@ class Model {
     $this->index = $index;
   }
 
+  // Dodaj walidator. Jeżeli funkcja określona w $validator zwróci fałsz,
+  // to dodanie rekordu się nie uda.
   static function add_validator($message, $validator) {
     static::$validators[$message] = $validator;
   }
 
+  // Dla nowych rekordów: stwórz, dla istniejących: zaktualizuj
+  // Funkcja zwraca fałsz, jeżeli dodanie się udało
+  // W przeciwnym razie zwraca tablice błędów.
   function save() {
     global $pdo;
 
@@ -111,6 +120,7 @@ class Model {
     return $ret;
   }
 
+  // Usuń dany rekord
   function delete() {
     global $pdo;
 
@@ -119,6 +129,7 @@ class Model {
     $q->execute([":id" => $this->index]);
   }
 
+  // Policz rekordy w danej tabeli
   static function count() {
     global $pdo;
 
