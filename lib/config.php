@@ -9,3 +9,5 @@ $config['db'] = [];
 
 // Dla sqlite:
 $config['db']['dsn'] = "sqlite:db/db.sqlite";
+
+error_reporting(E_ALL ^ E_NOTICE);

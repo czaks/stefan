@@ -87,6 +87,8 @@ switch ($action) {
     elseif ($users[0]->confirmed == 0)
       $flash = "Użytkownik nie jest potwierdzony";
     else {
+      $flash = "Wysłałem maila potwierdzającego!";
+
       $users[0]->recovery = md5(rand(1,10000000));
       $users[0]->save();
       // Zakomentuj odtąd
@@ -100,9 +102,10 @@ switch ($action) {
               $flash = ("Niestety, konfiguracja serwera nie pozwoliła nam wysłać maila. Wejdź pod ten adres: ".
                         "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}?action=remind-restore-form&code=".$users[0]->recovery.
                       " , aby aktywować konto.");
-
-      $output = render("remind", ["flash" => $flash]);
     }
+
+    $output = render("remind", ["flash" => $flash]);
+
     break;
   case 'remind-restore-form':
     $code = $_GET['code'];
@@ -123,7 +126,7 @@ switch ($action) {
     if (!$users)
       $output = render("remind", ["flash" => "Błędny kod!"]);
     elseif (!$passwd)
-      $output = render("remind-restore", ["code" => $code, "flash" => "Hasło nie może być puste"]);    
+      $output = render("remind-restore", ["code" => $code, "flash" => "Hasło nie może być puste"]);
     elseif ($passwd != $passwd2)
       $output = render("remind-restore", ["code" => $code, "flash" => "Hasła się nie zgadzają"]);
     else {

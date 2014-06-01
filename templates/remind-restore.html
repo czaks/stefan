@@ -4,7 +4,7 @@
     <?php if(!isset ($noerror)): ?><strong>Błąd:</strong> <?php endif ?><?=$flash?>
   </div>
 <?php endif ?>
-<form class="form-login" method="post" action="?action=remind-restore&amp;code=<?=$code?>">
+<form class="form-login validate-chpwd" method="post" action="?action=remind-restore&amp;code=<?=$code?>">
   <h2 class="form-login-heading">Zmień hasło</h2>
   <input type="password" class="form-control" placeholder="Hasło" name="password">
   <input type="password" class="form-control" placeholder="Potwierdź" name="confirm">

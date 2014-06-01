@@ -4,7 +4,7 @@
     <?php if(!isset ($noerror)): ?><strong>Błąd:</strong> <?php endif ?><?=$flash?>
   </div>
 <?php endif ?>
-<form class="form-login" method="post" action="?action=remind">
+<form class="form-login validate-remind" method="post" action="?action=remind">
   <h2 class="form-login-heading">Przypomnij hasło</h2>
   <input type="email" class="form-control" placeholder="E-mail" name="email">
   <button class="btn btn-lg btn-primary btn-block" type="submit">Przypomnij hasło</button>
