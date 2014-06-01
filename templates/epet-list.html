@@ -1,0 +1,33 @@
+<?php if (isset ($flash)): ?>
+  <div class="alert <?php if(!isset ($noerror)): ?>alert-danger<?php else: ?>alert-success<?php endif ?> alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <?php if(!isset ($noerror)): ?><strong>Błąd:</strong> <?php endif ?><?=$flash?>
+  </div>
+<?php endif ?>
+
+<table class='table'>
+  <tr>
+    <th>Firma</th>
+    <th>Model</th>
+    <th>Cena</th>
+    <th>Opcje</th>
+  </tr>
+  <?php foreach ($epety as $epet): ?>
+    <tr>
+      <td><?=$epet->firma?>
+      <td><?=$epet->model?>
+      <td><?=$epet->cena?>
+      <td><a href='?action=update-form&amp;id=<?=$epet->id?>'><span class="glyphicon glyphicon-pencil"></span> Edytuj</a>
+          <a href='?action=delete&amp;id=<?=$epet->id?>'><span class="glyphicon glyphicon-remove"></span> Usuń</a>
+    </tr>
+  <?php endforeach ?>
+</table>
+
+<a href='?action=create-form' class='add-button btn btn-primary'>Dodaj E-Papierosa</a>
+
+<ul class='pagination pages'>
+  <?php for ($i = 0; $i <= ($count-1) / 4; $i++): ?>
+    <li <?php if ($page == $i): ?>class='active'<?php endif ?> >
+      <a href='?page=<?=$i; ?>'><?=$i+1; ?></a>
+  <?php endfor ?>
+</ul>

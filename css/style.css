@@ -53,3 +53,14 @@ body {
 .form-register .btn {
   margin-top: 10px;
 }
+
+.pages {
+  margin-left: 20px;
+  margin-top: 0px; margin-bottom: 0px;
+  vertical-align: middle;
+}
+
+.add-button {
+  display: inline-block;
+  vertical-align: middle;
+}

@@ -1,6 +1,7 @@
 <?php
 class User extends Model {
   static $tablename = "users";
+  static $validators = [];
 
   function set_password($password) {
     $this->password = crypt($password, "$1$".rand(1,10000000)."$");

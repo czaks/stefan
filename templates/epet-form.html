@@ -1,0 +1,32 @@
+<?php if (isset ($flash)): ?>
+  <div class="alert <?php if(!isset ($noerror)): ?>alert-danger<?php else: ?>alert-success<?php endif ?> alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <?php if(!isset ($noerror)): ?><strong>Błąd:</strong> <?php endif ?><?=$flash?>
+  </div>
+<?php endif ?>
+<form class="form-register" method="post" action="?action=update&amp;id=<?=$id;?>">
+  <div class='container-fluid'>
+    <div class='row'>
+      <div class='col-xs-2'>Firma</div>
+      <div class='col-xs-10'><input type='text' name='firma' class='form-control' value="<?=$firma?>"></div>
+    </div>
+    <div class='row'>
+      <div class='col-xs-2'>Model</div>
+      <div class='col-xs-10'><input type='text' name='model' class='form-control' value="<?=$model?>"></div>
+    </div>
+    <div class='row'>
+      <div class='col-xs-2'>Opis</div>
+      <div class='col-xs-10'><textarea name='opis' class='form-control'><?=$opis?></textarea></div>
+    </div>
+    <div class='row'>
+      <div class='col-xs-2'>Cena</div>
+      <div class='col-xs-10'><input type='text' name='cena' class='form-control' value="<?=$cena?>"></div>
+    </div>
+    <div class='row'>
+      <div class='col-xs-2'>Opinia</div>
+      <div class='col-xs-10'><textarea name='opinia' class='form-control'><?=$opinia?></textarea></div>
+    </div>
+
+    <button class='btn btn-primary btn-lg btn-block'><?=$id?"Zaktualizuj":"Utwórz"?></button>
+  </div>
+</form>

@@ -17,14 +17,14 @@ class Model {
   }
 
   static function add_validator($message, $validator) {
-    self::$validators[$message] = $validator;
+    static::$validators[$message] = $validator;
   }
 
   function save() {
     global $pdo;
 
     $errors = [];
-    foreach (self::$validators as $message => $func) {
+    foreach (static::$validators as $message => $func) {
       $func($this) or $errors[] = $message;
     }
     if ($errors) return $errors; // Jeżeli są błędy, zwróć je.
@@ -117,5 +117,15 @@ class Model {
     $q = "DELETE FROM ".static::$tablename." WHERE id=:id";
     $q = $pdo->prepare($q);
     $q->execute([":id" => $this->index]);
+  }
+
+  static function count() {
+    global $pdo;
+
+    $q = "SELECT COUNT(*) AS cnt FROM ".static::$tablename;
+    $q = $pdo->prepare($q);
+    $q->execute();
+    $q = $q->fetch(PDO::FETCH_ASSOC);
+    return $q['cnt'];
   }
 }
