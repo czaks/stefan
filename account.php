@@ -22,7 +22,7 @@ switch ($action) {
       $output = render("login", ["flash" => "Konto nieaktywne, proszę potwierdzić email!"]);
     else {
       $_SESSION['userid'] = $users[0]->id;
-      header("Location: /");
+      header("Location: .");
     }
     break;
   case 'register-form':
@@ -62,31 +62,75 @@ switch ($action) {
       $flash = "";
 
       // Zakomentuj odtąd
-
+      /*
       @mail($email, "Rejestracja", "Kliknij w ten link aby kontynuować: http://{$_SERVER['HTTP_HOST']}".
-                                    "/account.php?action=activate&code=".$user->confirm_hash)
+                                    "{$_SERVER['PHP_SELF']}?action=activate&code=".$user->confirm_hash)
 
-                                  or
+                                  or*/
       // Dotąd, jeżeli rejestracja wydaje się trwać w nieskończoność
 
               $flash = ("Niestety, konfiguracja serwera nie pozwoliła nam wysłać maila. Wejdź pod ten adres: ".
-                        "http://{$_SERVER['HTTP_HOST']}/account.php?action=activate&code=".$user->confirm_hash.
+                        "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}?action=activate&code=".$user->confirm_hash.
                       " , aby aktywować konto.");
 
       $output = render("register-activation", ["flash" => $flash]);
     }
     break;
   case 'remind-form':
-
+    $output = render("remind", []);
     break;
   case 'remind':
+    $email = $_POST['email'];
+    $users = User::where("email = ?", [$email]);
+    if (!$users)
+      $flash = "Użytkownik nie istnieje!";
+    elseif ($users[0]->confirmed == 0)
+      $flash = "Użytkownik nie jest potwierdzony";
+    else {
+      $users[0]->recovery = md5(rand(1,10000000));
+      $users[0]->save();
+      // Zakomentuj odtąd
+      /*
+      @mail($email, "Przypomnienie hasła", "Kliknij w ten link aby kontynuować: http://{$_SERVER['HTTP_HOST']}".
+                                    "{$_SERVER['PHP_SELF']}?action=remind-restore-form&code=".$users[0]->recovery)
 
+                                  or*/
+      // Dotąd, jeżeli przypominanie hasłą wydaje się trwać w nieskończoność (albo nie działa)
+
+              $flash = ("Niestety, konfiguracja serwera nie pozwoliła nam wysłać maila. Wejdź pod ten adres: ".
+                        "http://{$_SERVER['HTTP_HOST']}{$_SERVER['PHP_SELF']}?action=remind-restore-form&code=".$users[0]->recovery.
+                      " , aby aktywować konto.");
+
+      $output = render("remind", ["flash" => $flash]);
+    }
     break;
   case 'remind-restore-form':
+    $code = $_GET['code'];
+    $users = User::where("recovery = ?", [$code]);
+    if ($users)
+      $output = render("remind-restore", ["code" => $code]);
+    else
+      $output = render("remind", ["flash" => "Błędny kod!"]);
 
     break;
   case 'remind-restore':
+    $code = $_GET['code'];
+    $users = User::where("recovery = ?", [$code]);
 
+    $passwd = $_POST['password'];
+    $passwd2 = $_POST['confirm'];
+
+    if (!$users)
+      $output = render("remind", ["flash" => "Błędny kod!"]);
+    elseif (!$passwd)
+      $output = render("remind-restore", ["code" => $code, "flash" => "Hasło nie może być puste"]);    
+    elseif ($passwd != $passwd2)
+      $output = render("remind-restore", ["code" => $code, "flash" => "Hasła się nie zgadzają"]);
+    else {
+      $users[0]->set_password($passwd);
+      $users[0]->save();
+      $output = render("login", ["flash" => "Zmiana hasła przebiegła pomyślnie! Proszę się zalogować!", "noerror" => true]);
+    }
     break;
   case 'activate':
     $code = $_GET['code'];
@@ -103,8 +147,10 @@ switch ($action) {
     break;
   case 'logout':
     unset($_SESSION['userid']);
-    header("Location: /");
+    header("Location: .");
     break;
+  default:
+    $output = "You have reached the end of the Internet, congratulations!";
 }
 
 if ($output) layout($output);

@@ -110,4 +110,12 @@ class Model {
     }
     return $ret;
   }
+
+  function delete() {
+    global $pdo;
+
+    $q = "DELETE FROM ".static::$tablename." WHERE id=:id";
+    $q = $pdo->prepare($q);
+    $q->execute([":id" => $this->index]);
+  }
 }

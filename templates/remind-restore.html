@@ -1,0 +1,12 @@
+<?php if (isset ($flash)): ?>
+  <div class="alert <?php if(!isset ($noerror)): ?>alert-danger<?php else: ?>alert-success<?php endif ?> alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <?php if(!isset ($noerror)): ?><strong>Błąd:</strong> <?php endif ?><?=$flash?>
+  </div>
+<?php endif ?>
+<form class="form-login" method="post" action="?action=remind-restore&amp;code=<?=$code?>">
+  <h2 class="form-login-heading">Zmień hasło</h2>
+  <input type="password" class="form-control" placeholder="Hasło" name="password">
+  <input type="password" class="form-control" placeholder="Potwierdź" name="confirm">
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Zmień hasło</button>
+</form>
