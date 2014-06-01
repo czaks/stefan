@@ -1,4 +1,5 @@
 <?php
+$installing = true;
 require_once "lib/core.php";
 
 db_init();					// Łączymy się z bazą danych
